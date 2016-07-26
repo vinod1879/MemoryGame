@@ -1,0 +1,6 @@
+framework module Pods_MyntraTest {
+  umbrella header "Pods-MyntraTest-umbrella.h"
+
+  export *
+  module * { export * }
+}

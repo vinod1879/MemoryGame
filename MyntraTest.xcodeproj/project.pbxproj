@@ -14,6 +14,7 @@
 		0B03347F1D47FA390011B05B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B03347D1D47FA390011B05B /* LaunchScreen.storyboard */; };
 		0B03348A1D47FA390011B05B /* MyntraTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0334891D47FA390011B05B /* MyntraTestTests.swift */; };
 		0B0334951D47FA390011B05B /* MyntraTestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0334941D47FA390011B05B /* MyntraTestUITests.swift */; };
+		40BAEBC49A0F144840B7C5C9 /* Pods_MyntraTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4D6D77AE07962CFA43BF90E /* Pods_MyntraTest.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,9 @@
 		0B0334901D47FA390011B05B /* MyntraTestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyntraTestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B0334941D47FA390011B05B /* MyntraTestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyntraTestUITests.swift; sourceTree = "<group>"; };
 		0B0334961D47FA390011B05B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		76156CE83A7A6D9595CA6C3A /* Pods-MyntraTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyntraTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MyntraTest/Pods-MyntraTest.debug.xcconfig"; sourceTree = "<group>"; };
+		D4D6D77AE07962CFA43BF90E /* Pods_MyntraTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyntraTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DB33B15BF246B1ABDF1FBE06 /* Pods-MyntraTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyntraTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-MyntraTest/Pods-MyntraTest.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				40BAEBC49A0F144840B7C5C9 /* Pods_MyntraTest.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +86,8 @@
 				0B0334881D47FA390011B05B /* MyntraTestTests */,
 				0B0334931D47FA390011B05B /* MyntraTestUITests */,
 				0B0334721D47FA390011B05B /* Products */,
+				9B85282B38818E1CEA35FE4A /* Pods */,
+				2107C716329E8FD5CD629A54 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -97,6 +104,7 @@
 		0B0334731D47FA390011B05B /* MyntraTest */ = {
 			isa = PBXGroup;
 			children = (
+				0B0334A21D47FA6B0011B05B /* Network */,
 				0B0334741D47FA390011B05B /* AppDelegate.swift */,
 				0B0334761D47FA390011B05B /* ViewController.swift */,
 				0B0334781D47FA390011B05B /* Main.storyboard */,
@@ -125,6 +133,30 @@
 			path = MyntraTestUITests;
 			sourceTree = "<group>";
 		};
+		0B0334A21D47FA6B0011B05B /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Network;
+			sourceTree = "<group>";
+		};
+		2107C716329E8FD5CD629A54 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D4D6D77AE07962CFA43BF90E /* Pods_MyntraTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9B85282B38818E1CEA35FE4A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				76156CE83A7A6D9595CA6C3A /* Pods-MyntraTest.debug.xcconfig */,
+				DB33B15BF246B1ABDF1FBE06 /* Pods-MyntraTest.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -132,9 +164,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0B0334991D47FA390011B05B /* Build configuration list for PBXNativeTarget "MyntraTest" */;
 			buildPhases = (
+				8B8F1E6179143AF9923A0CC0 /* 📦 Check Pods Manifest.lock */,
 				0B03346D1D47FA390011B05B /* Sources */,
 				0B03346E1D47FA390011B05B /* Frameworks */,
 				0B03346F1D47FA390011B05B /* Resources */,
+				70BC331DB88145AB68323CDC /* 📦 Embed Pods Frameworks */,
+				D5EA80997261CA2322B5AC96 /* 📦 Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -250,6 +285,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		70BC331DB88145AB68323CDC /* 📦 Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MyntraTest/Pods-MyntraTest-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8B8F1E6179143AF9923A0CC0 /* 📦 Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		D5EA80997261CA2322B5AC96 /* 📦 Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "📦 Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-MyntraTest/Pods-MyntraTest-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0B03346D1D47FA390011B05B /* Sources */ = {
@@ -399,6 +482,7 @@
 		};
 		0B03349A1D47FA390011B05B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 76156CE83A7A6D9595CA6C3A /* Pods-MyntraTest.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MyntraTest/Info.plist;
@@ -410,6 +494,7 @@
 		};
 		0B03349B1D47FA390011B05B /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = DB33B15BF246B1ABDF1FBE06 /* Pods-MyntraTest.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = MyntraTest/Info.plist;
@@ -484,6 +569,7 @@
 				0B03349B1D47FA390011B05B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0B03349C1D47FA390011B05B /* Build configuration list for PBXNativeTarget "MyntraTestTests" */ = {
 			isa = XCConfigurationList;
@@ -492,6 +578,7 @@
 				0B03349E1D47FA390011B05B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0B03349F1D47FA390011B05B /* Build configuration list for PBXNativeTarget "MyntraTestUITests" */ = {
 			isa = XCConfigurationList;
@@ -500,6 +587,7 @@
 				0B0334A11D47FA390011B05B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
