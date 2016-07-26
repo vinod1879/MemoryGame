@@ -14,6 +14,8 @@
 		0B03347F1D47FA390011B05B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B03347D1D47FA390011B05B /* LaunchScreen.storyboard */; };
 		0B03348A1D47FA390011B05B /* MyntraTestTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0334891D47FA390011B05B /* MyntraTestTests.swift */; };
 		0B0334951D47FA390011B05B /* MyntraTestUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0334941D47FA390011B05B /* MyntraTestUITests.swift */; };
+		0B0334A51D47FD4A0011B05B /* MTNetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0334A41D47FD4A0011B05B /* MTNetworkHelper.swift */; };
+		0B0334A71D4806B00011B05B /* MTImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0334A61D4806B00011B05B /* MTImageCell.swift */; };
 		40BAEBC49A0F144840B7C5C9 /* Pods_MyntraTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4D6D77AE07962CFA43BF90E /* Pods_MyntraTest.framework */; };
 /* End PBXBuildFile section */
 
@@ -48,6 +50,8 @@
 		0B0334901D47FA390011B05B /* MyntraTestUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MyntraTestUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B0334941D47FA390011B05B /* MyntraTestUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyntraTestUITests.swift; sourceTree = "<group>"; };
 		0B0334961D47FA390011B05B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0B0334A41D47FD4A0011B05B /* MTNetworkHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTNetworkHelper.swift; sourceTree = "<group>"; };
+		0B0334A61D4806B00011B05B /* MTImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTImageCell.swift; sourceTree = "<group>"; };
 		76156CE83A7A6D9595CA6C3A /* Pods-MyntraTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyntraTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MyntraTest/Pods-MyntraTest.debug.xcconfig"; sourceTree = "<group>"; };
 		D4D6D77AE07962CFA43BF90E /* Pods_MyntraTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyntraTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB33B15BF246B1ABDF1FBE06 /* Pods-MyntraTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyntraTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-MyntraTest/Pods-MyntraTest.release.xcconfig"; sourceTree = "<group>"; };
@@ -104,10 +108,9 @@
 		0B0334731D47FA390011B05B /* MyntraTest */ = {
 			isa = PBXGroup;
 			children = (
-				0B0334A31D47FC610011B05B /* Models */,
+				0B0334A31D47FC610011B05B /* Classes */,
 				0B0334A21D47FA6B0011B05B /* Network */,
 				0B0334741D47FA390011B05B /* AppDelegate.swift */,
-				0B0334761D47FA390011B05B /* ViewController.swift */,
 				0B0334781D47FA390011B05B /* Main.storyboard */,
 				0B03347B1D47FA390011B05B /* Assets.xcassets */,
 				0B03347D1D47FA390011B05B /* LaunchScreen.storyboard */,
@@ -137,15 +140,18 @@
 		0B0334A21D47FA6B0011B05B /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				0B0334A41D47FD4A0011B05B /* MTNetworkHelper.swift */,
 			);
 			name = Network;
 			sourceTree = "<group>";
 		};
-		0B0334A31D47FC610011B05B /* Models */ = {
+		0B0334A31D47FC610011B05B /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				0B0334A61D4806B00011B05B /* MTImageCell.swift */,
+				0B0334761D47FA390011B05B /* ViewController.swift */,
 			);
-			name = Models;
+			name = Classes;
 			sourceTree = "<group>";
 		};
 		2107C716329E8FD5CD629A54 /* Frameworks */ = {
@@ -347,6 +353,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B0334A71D4806B00011B05B /* MTImageCell.swift in Sources */,
+				0B0334A51D47FD4A0011B05B /* MTNetworkHelper.swift in Sources */,
 				0B0334771D47FA390011B05B /* ViewController.swift in Sources */,
 				0B0334751D47FA390011B05B /* AppDelegate.swift in Sources */,
 			);

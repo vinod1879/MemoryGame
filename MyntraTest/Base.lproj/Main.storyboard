@@ -1,25 +1,113 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="czW-xJ-3Fm">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="BYZ-38-t0r" customClass="ViewController" customModule="MyntraTest" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Rpm-rs-d10">
+                                <rect key="frame" x="0.0" y="292" width="375" height="375"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Rpm-rs-d10" secondAttribute="height" multiplier="1:1" id="2ro-xL-tTo"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="Ulv-LK-Gph">
+                                    <size key="itemSize" width="125" height="125"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MTImageCell" id="koo-lA-uqh" customClass="MTImageCell" customModule="MyntraTest" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3he-lm-eNm">
+                                                    <rect key="frame" x="0.0" y="0.0" width="125" height="125"/>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="3he-lm-eNm" firstAttribute="leading" secondItem="koo-lA-uqh" secondAttribute="leading" id="5hk-qt-KTq"/>
+                                            <constraint firstAttribute="trailing" secondItem="3he-lm-eNm" secondAttribute="trailing" id="LU6-vE-S9F"/>
+                                            <constraint firstAttribute="bottom" secondItem="3he-lm-eNm" secondAttribute="bottom" id="cDv-vV-bL5"/>
+                                            <constraint firstItem="3he-lm-eNm" firstAttribute="top" secondItem="koo-lA-uqh" secondAttribute="top" id="iYe-Yp-mRZ"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="imageView" destination="3he-lm-eNm" id="ktO-OM-wJS"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="NqP-dJ-fol"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="vcB-7Z-Ij9"/>
+                                </connections>
+                            </collectionView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="91I-cc-ywm">
+                                <rect key="frame" x="177" y="324" width="20" height="20"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.29157110091743121" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="91I-cc-ywm" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="3I6-z5-Pkn"/>
+                            <constraint firstAttribute="trailing" secondItem="Rpm-rs-d10" secondAttribute="trailing" id="9zZ-Is-gy7"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Rpm-rs-d10" secondAttribute="bottom" id="CUu-hg-vBj"/>
+                            <constraint firstItem="Rpm-rs-d10" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Efr-gx-Jeo"/>
+                            <constraint firstItem="91I-cc-ywm" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="v7S-i9-pPh"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="fYx-mY-ym1">
+                        <barButtonItem key="leftBarButtonItem" systemItem="refresh" id="Ixc-mG-S3X">
+                            <connections>
+                                <action selector="refreshButtonTapped:" destination="BYZ-38-t0r" id="ZgX-we-ALQ"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <connections>
+                        <outlet property="activityIndicator" destination="91I-cc-ywm" id="0Qa-fi-aYB"/>
+                        <outlet property="imagesCollection" destination="Rpm-rs-d10" id="p72-GL-uap"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="1313.5" y="334.5"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="2jQ-NW-jFG">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="czW-xJ-3Fm" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yQe-BI-WeE">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="DGo-hM-8ud"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cbK-R0-RcX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="631" y="335"/>
         </scene>
     </scenes>
 </document>
