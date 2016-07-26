@@ -104,6 +104,7 @@
 		0B0334731D47FA390011B05B /* MyntraTest */ = {
 			isa = PBXGroup;
 			children = (
+				0B0334A31D47FC610011B05B /* Models */,
 				0B0334A21D47FA6B0011B05B /* Network */,
 				0B0334741D47FA390011B05B /* AppDelegate.swift */,
 				0B0334761D47FA390011B05B /* ViewController.swift */,
@@ -138,6 +139,13 @@
 			children = (
 			);
 			name = Network;
+			sourceTree = "<group>";
+		};
+		0B0334A31D47FC610011B05B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Models;
 			sourceTree = "<group>";
 		};
 		2107C716329E8FD5CD629A54 /* Frameworks */ = {

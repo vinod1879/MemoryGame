@@ -4,6 +4,7 @@ use_frameworks!
 target 'MyntraTest' do
 
 	pod 'Alamofire', '~> 3.4'
-	pod 'AlamofireObjectMapper', '~> 3.0'
+	pod 'SDWebImage', '~>3.8'
+	pod 'SwiftyJSON'
 
 end
