@@ -8,8 +8,6 @@
 
 import UIKit
 
-private let networkErrorMessage     = "Error fetching images! Please retry."
-
 protocol MTMemoryGameDelegate : class {
     
     func memoryGameStartedInit(memoryGame: MTMemoryGame)
@@ -89,6 +87,11 @@ class MTMemoryGame: NSObject {
         return nil
     }
     
+    func endGame () {
+        
+        timer.stop()
+    }
+    
     //MARK:- Private
     
     private func selectRandomImage () {
@@ -125,7 +128,7 @@ extension MTMemoryGame : MTImageDownloaderDelegate {
     
     private func fetchImages () {
         
-        MTNetworkHelper.fetchImageLinksWithCompletion { (imageLinks) in
+        MTNetworkHelper.fetchImageLinksWithCompletion { (imageLinks, message) in
             
             let success             = imageLinks != nil
             
@@ -138,7 +141,7 @@ extension MTMemoryGame : MTImageDownloaderDelegate {
                 
             } else {
              
-                self.delegate?.memoryGameInitializationFailed(self, error: networkErrorMessage)
+                self.delegate?.memoryGameInitializationFailed(self, error: message)
             }
         }
     }

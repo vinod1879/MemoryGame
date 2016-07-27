@@ -13,9 +13,14 @@ import Freddy
 private let FlickrAPIURL    = "https://api.flickr.com/services/feeds/photos_public.gne"
 private let FlickrAPIParams = ["format": "json", "lang": "en-us", "nojsoncallback": "1"]
 
+private let FlickrError     = "Flickr API had invalid data while fetching images! Please retry."
+private let NetworkError    = "Network error! Please check your connection."
+
+
+
 class MTNetworkHelper: NSObject {
     
-    static func fetchImageLinksWithCompletion (completion: (imageLinks: [String]?) -> Void) {
+    static func fetchImageLinksWithCompletion (completion: (imageLinks: [String]?, error: String) -> Void) {
         
         Alamofire.request(.GET, FlickrAPIURL, parameters: FlickrAPIParams)
         .validate()
@@ -43,20 +48,20 @@ class MTNetworkHelper: NSObject {
                     }
                     
                     print("\(items.count) image links found!")
-                    completion(imageLinks: links)
+                    completion(imageLinks: links, error: "")
                     
                 } catch let error {
                     
                     print("Error! \(error)")
                     
-                    completion(imageLinks: nil)
+                    completion(imageLinks: nil, error: FlickrError)
                 }
             }
             else {
                 
                 print("Status Code: \(response.response?.statusCode)")
                 print("image fetch failed...\(response.result.error)")
-                completion(imageLinks: nil)
+                completion(imageLinks: nil, error: NetworkError)
             }
         }
     }

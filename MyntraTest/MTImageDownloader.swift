@@ -16,11 +16,16 @@ protocol MTImageDownloaderDelegate : class {
 
 class MTImageDownloader: NSObject {
     
-    let imageLinks  : [String]
-    weak var delegate    : MTImageDownloaderDelegate?
+    //MARK:- Public Vars
+    
+    let imageLinks          : [String]
+    weak var delegate       : MTImageDownloaderDelegate?
+    
+    //MARK:- Private Vars
     
     private var downloadedImages : [UIImage]
     
+    //MARK:- Init and Public API
     
     init(imageLinks: [String]) {
         
@@ -30,32 +35,35 @@ class MTImageDownloader: NSObject {
     
     func startDownloads () {
         
-        resume()
+        enqueueDownloads()
     }
     
-    private func resume () {
+    //MARK:- Private API
+    
+    private func checkStatus () {
         
         if downloadedImages.count == imageLinks.count {
             
             delegate?.imageDownloader(self, finishedWithImages: downloadedImages)
-            return
         }
+    }
+    
+    private func enqueueDownloads () {
         
-        if downloadedImages.count > imageLinks.count { return } // Safety check
-        
-        let urlStr = imageLinks[downloadedImages.count]
-        
-        guard let url = NSURL(string: urlStr) else { return }
-        
-        let downloader = SDWebImageDownloader.sharedDownloader()
-        
-        downloader.downloadImageWithURL(url, options: [], progress: nil) { (image, data, error, finished) in
-     
-            if let img = image {
+        for link in imageLinks {
+            
+            let downloader = SDWebImageDownloader.sharedDownloader()
+            
+            guard let url = NSURL(string: link) else { continue }
+            
+            downloader.downloadImageWithURL(url, options: [], progress: nil, completed: { (image, data, error, finished) in
                 
-                self.downloadedImages.append(img)
-                self.resume()
-            }
+                if let img = image {
+                    
+                    self.downloadedImages.append(img)
+                    self.checkStatus()
+                }
+            })
         }
     }
 }

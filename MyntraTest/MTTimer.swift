@@ -38,6 +38,11 @@ class MTTimer: NSObject {
         start()
     }
     
+    func stop () {
+        
+        timer?.invalidate()
+    }
+    
     //MARK:- Private
     
     private func start () {
@@ -65,7 +70,6 @@ class MTTimer: NSObject {
             
         } else {
             
-            print("Time Left: ", Int(timeLeft))
             postNotificationForTimeLeft(timeLeft)
         }
     }
