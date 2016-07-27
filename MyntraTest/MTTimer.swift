@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol MTTimerDelegate {
+protocol MTTimerDelegate : class {
     
     func timer(timer: MTTimer, updatedTimeLeft timeLeft: Double, withFormattedString formattedString: String)
     
@@ -19,7 +19,7 @@ class MTTimer: NSObject {
     
     //MARK:- Public Vars
     
-    var delegate : MTTimerDelegate?
+    weak var delegate : MTTimerDelegate?
     
     //MARK:- Private Vars
     

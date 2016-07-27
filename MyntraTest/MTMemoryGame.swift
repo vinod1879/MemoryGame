@@ -8,9 +8,13 @@
 
 import UIKit
 
+private let networkErrorMessage     = "Error fetching images! Please retry."
+
 protocol MTMemoryGameDelegate : class {
     
+    func memoryGameStartedInit(memoryGame: MTMemoryGame)
     func memoryGameInitializationComplete(memorygame: MTMemoryGame)
+    func memoryGameInitializationFailed(memoryGame: MTMemoryGame, error: String)
     func memoryGame(memoryGame: MTMemoryGame, updatedTimeString timeString: String)
     func memoryGameTimerExpired(memoryGame: MTMemoryGame)
     func memoryGame(memoryGame: MTMemoryGame, selectedImage image: UIImage, withIndex index: Int)
@@ -21,7 +25,7 @@ class MTMemoryGame: NSObject {
     
     //MARK:- Delegate
     
-    var delegate : MTMemoryGameDelegate?
+    weak var delegate : MTMemoryGameDelegate?
     
     //MARK:- Private Vars
     
@@ -30,6 +34,7 @@ class MTMemoryGame: NSObject {
     private var indices         : [Int]
     private let timer           : MTTimer
     private var timerRunning    = false
+    private var imageDownloader : MTImageDownloader!
     
     //MARK:- Init and Public API
     
@@ -44,15 +49,10 @@ class MTMemoryGame: NSObject {
         super.init()
     }
     
-    func setImage(image: UIImage, atIndex index: Int) {
+    func initialize() {
         
-        indices.append(index)
-        dictionary[index] = image
-        
-        if dictionary.count == numberOfTiles {
-            
-            delegate?.memoryGameInitializationComplete(self)
-        }
+        delegate?.memoryGameStartedInit(self)
+        fetchImages()
     }
     
     func startTimerWithTimeInterval(timeInterval: NSTimeInterval) {
@@ -79,14 +79,14 @@ class MTMemoryGame: NSObject {
         }
     }
     
-    func showImageAtIndex(index: Int) -> Bool {
+    func imageAtIndex(index: Int) -> UIImage? {
         
         if timerRunning || !indices.contains(index) {
             
-            return true
+            return dictionary[index]
         }
 
-        return false
+        return nil
     }
     
     //MARK:- Private
@@ -97,9 +97,10 @@ class MTMemoryGame: NSObject {
         
         if randomIndex >= 0 {
             
-            let image = dictionary[randomIndex]
+            let element = indices[randomIndex]
+            let image   = dictionary[element]
             
-            delegate?.memoryGame(self, selectedImage: image!, withIndex: randomIndex)
+            delegate?.memoryGame(self, selectedImage: image!, withIndex: element)
             
         }
     }
@@ -117,5 +118,43 @@ extension MTMemoryGame : MTTimerDelegate {
     func timer(timer: MTTimer, updatedTimeLeft timeLeft: Double, withFormattedString: String) {
         
         delegate?.memoryGame(self, updatedTimeString: withFormattedString)
+    }
+}
+
+extension MTMemoryGame : MTImageDownloaderDelegate {
+    
+    private func fetchImages () {
+        
+        MTNetworkHelper.fetchImageLinksWithCompletion { (imageLinks) in
+            
+            let success             = imageLinks != nil
+            
+            if success {
+                
+                let requiredLinks = Array(imageLinks![0..<self.numberOfTiles])
+                self.imageDownloader = MTImageDownloader(imageLinks: requiredLinks)
+                self.imageDownloader.delegate = self
+                self.imageDownloader.startDownloads()
+                
+            } else {
+             
+                self.delegate?.memoryGameInitializationFailed(self, error: networkErrorMessage)
+            }
+        }
+    }
+    
+    func imageDownloader(imageDownloader: MTImageDownloader, finishedWithImages images: [UIImage]) {
+        
+        print("Images downloaded!")
+        for index in 0 ..< images.count {
+            
+            indices.append(index)
+            dictionary[index] = images[index]
+        }
+        
+        dispatch_async(dispatch_get_main_queue()) { 
+        
+            self.delegate?.memoryGameInitializationComplete(self)
+        }
     }
 }
