@@ -117,7 +117,6 @@
 			isa = PBXGroup;
 			children = (
 				0B0334A31D47FC610011B05B /* Classes */,
-				0B0334A21D47FA6B0011B05B /* Network */,
 				0B0334741D47FA390011B05B /* AppDelegate.swift */,
 				0B0334781D47FA390011B05B /* Main.storyboard */,
 				0B03347B1D47FA390011B05B /* Assets.xcassets */,
@@ -148,6 +147,7 @@
 		0B0334A21D47FA6B0011B05B /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				0B0334B01D48DC5A0011B05B /* MTImageDownloader.swift */,
 				0B0334A41D47FD4A0011B05B /* MTNetworkHelper.swift */,
 			);
 			name = Network;
@@ -156,14 +156,30 @@
 		0B0334A31D47FC610011B05B /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				0B0334B41D496BEF0011B05B /* Views */,
+				0B0334A21D47FA6B0011B05B /* Network */,
+				0B0334B51D496C3A0011B05B /* Logic & Utility */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		0B0334B41D496BEF0011B05B /* Views */ = {
+			isa = PBXGroup;
+			children = (
 				0B0334A61D4806B00011B05B /* MTImageCell.swift */,
 				0B0334761D47FA390011B05B /* ViewController.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		0B0334B51D496C3A0011B05B /* Logic & Utility */ = {
+			isa = PBXGroup;
+			children = (
 				0B0334A81D48356B0011B05B /* MTMemoryGame.swift */,
-				0B0334B01D48DC5A0011B05B /* MTImageDownloader.swift */,
 				0B0334AC1D48C29A0011B05B /* MTTimer.swift */,
 				0B0334AE1D48D2610011B05B /* MTUtility.swift */,
 			);
-			name = Classes;
+			name = "Logic & Utility";
 			sourceTree = "<group>";
 		};
 		2107C716329E8FD5CD629A54 /* Frameworks */ = {
