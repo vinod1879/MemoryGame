@@ -29,6 +29,7 @@ class MTMemoryGame: NSObject {
     private var dictionary      : [Int : UIImage]
     private var indices         : [Int]
     private let timer           : MTTimer
+    private var timerRunning    = false
     
     //MARK:- Init and Public API
     
@@ -56,7 +57,8 @@ class MTMemoryGame: NSObject {
     
     func startTimerWithTimeInterval(timeInterval: NSTimeInterval) {
         
-        timer.delegate = self
+        timer.delegate  = self
+        timerRunning    = true
         timer.startWithTimeInterval(timeInterval)
     }
     
@@ -75,6 +77,16 @@ class MTMemoryGame: NSObject {
             
             selectRandomImage()
         }
+    }
+    
+    func showImageAtIndex(index: Int) -> Bool {
+        
+        if timerRunning || !indices.contains(index) {
+            
+            return true
+        }
+
+        return false
     }
     
     //MARK:- Private
@@ -97,6 +109,7 @@ extension MTMemoryGame : MTTimerDelegate {
     
     func timerTimedOut(timer: MTTimer) {
         
+        timerRunning = false
         delegate?.memoryGameTimerExpired(self)
         selectRandomImage()
     }

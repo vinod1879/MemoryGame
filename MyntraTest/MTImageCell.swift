@@ -11,7 +11,7 @@ import SDWebImage
 
 protocol MTImageCellDelegate : class {
     
-    func imageCell(imageCell : MTImageCell, downloadedImageAtIndex index: Int)
+    func imageCell(imageCell : MTImageCell, downloadedImage image: UIImage, atIndex index: Int)
 }
 
 class MTImageCell: UICollectionViewCell {
@@ -27,14 +27,18 @@ class MTImageCell: UICollectionViewCell {
     
     //MARK:- Public API
     
-    func setImageWithLink(imageLink : String) {
+    func setImageWithLink(imageLink : String, hidden: Bool) {
+        
+        imageView.hidden = hidden
      
         guard let url = NSURL(string: imageLink) else { return }
         
-        imageView.sd_setImageWithURL(url) { _ in
-         
+        imageView.sd_setImageWithURL(url) { (image, error, cacheType, url) in
             
-            self.delegate?.imageCell(self, downloadedImageAtIndex: self.index)
+            if error == nil {
+                
+                self.delegate?.imageCell(self, downloadedImage: image, atIndex: self.index)
+            }
         }
     }
 }

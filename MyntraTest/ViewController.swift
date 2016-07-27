@@ -12,6 +12,7 @@ private let ImageCellId             = "MTImageCell"
 private let cellWidth : CGFloat     = CGRectGetWidth(UIScreen.mainScreen().bounds) / 3
 private let cellSize                = CGSizeMake(cellWidth, cellWidth)
 private let numberOfCells           = 9
+private let timerDuration           = 15.0
 
 private let downloadStartMessage    = "Fetching image list..."
 private let downloadSuccessMessage  = "Memorise the images"
@@ -30,15 +31,18 @@ class ViewController: UIViewController {
     
     //MARK:- Private Vars
     
-    private var fetchedImageLinks : [String]!
-    private var downloadedIndices = Set<Int>()
+    private var fetchedImageLinks   : [String]!
+    private var memoryGame          : MTMemoryGame!
+    private var secretIndex         : Int?
     
     //MARK:- View Load
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setup()
+        questionImageWidth.constant = cellSize.width
+        
+        setupGame()
         fetchImages()
     }
 
@@ -51,78 +55,65 @@ class ViewController: UIViewController {
     
     @IBAction func refreshButtonTapped (sender: AnyObject) {
         
-        downloadedIndices.removeAll()
+        setupGame()
         fetchImages()
     }
     
     //MARK:- Private API
     
-    private func setup () {
+    private func setupGame () {
         
-        questionImageWidth.constant = cellSize.width
+        memoryGame = MTMemoryGame(numberOfTiles: numberOfCells)
+        memoryGame.delegate = self
     }
+    
+    private func handleSuccessfulDownloadOfImage (image: UIImage, atIndex index : Int) {
+        
+        memoryGame.setImage(image, atIndex: index)
+    }
+}
 
-    private func fetchImages () {
+extension ViewController : MTMemoryGameDelegate {
+    
+    func memoryGameInitializationComplete(memorygame: MTMemoryGame) {
         
-        fetchImageStarted()
+        print("init complete")
+        imagesCollection.hidden = false
+        activityIndicator.stopAnimating()
         
-        MTNetworkHelper.fetchImageLinksWithCompletion { (imageLinks) in
-            
-            let success             = imageLinks != nil
-            self.fetchedImageLinks  = imageLinks
-            
-            dispatch_async(dispatch_get_main_queue(), { 
-            
-                self.fetchImageCompleted(success)
-            })
-        }
+        memoryGame.startTimerWithTimeInterval(timerDuration)
+        imagesCollection.reloadData()
     }
     
-    private func fetchImageStarted () {
-        
-        imagesCollection.hidden = true
-        activityIndicator.startAnimating()
+    func memoryGame(memoryGame: MTMemoryGame, updatedTimeString timeString: String) {
+     
+        print("time update")
+        navigationItem.title = timeString
     }
     
-    private func fetchImageCompleted (success: Bool) {
+    func memoryGameTimerExpired(memoryGame: MTMemoryGame) {
         
         imagesCollection.reloadData()
-        
-        if !success {
-            
-            activityIndicator.stopAnimating()
-            notifyMessage(networkErrorMessage, withTitle: errorTitle)
-        }
     }
     
-    private func handleImageDownloadSuccessAtIndex (index : Int) {
+    func memoryGameCompletedSuccessfully(memoryGame: MTMemoryGame) {
         
-        downloadedIndices.insert(index)
-        
-        if downloadedIndices.count == numberOfCells {
-            
-            imagesCollection.hidden = false
-            activityIndicator.stopAnimating()
-        }
+        print("~~~ Success ~~~")
+        navigationItem.title = "Success!"
     }
     
-    private func notifyMessage(message: String?, withTitle title: String) {
+    func memoryGame(memoryGame: MTMemoryGame, selectedImage image: UIImage, withIndex index: Int) {
         
-        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-        
-        let action = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
-        
-        alertController.addAction(action)
-        
-        presentViewController(alertController, animated: true, completion: nil)
+        print("Image Presented")
+        questionImageView.image = image
     }
 }
 
 extension ViewController : MTImageCellDelegate {
     
-    func imageCell(imageCell: MTImageCell, downloadedImageAtIndex index: Int) {
+    func imageCell(imageCell: MTImageCell, downloadedImage image: UIImage, atIndex index: Int) {
         
-        handleImageDownloadSuccessAtIndex(index)
+        handleSuccessfulDownloadOfImage(image, atIndex: index)
     }
 }
 
@@ -145,13 +136,15 @@ extension ViewController : UICollectionViewDataSource, UICollectionViewDelegate,
         cell.index      = indexPath.row
         cell.delegate   = self
         
+        let hidden      = !memoryGame.showImageAtIndex(indexPath.row)
+        
         if let imgLinks = fetchedImageLinks {
             
             if indexPath.row < imgLinks.count {
                 
                 let imgStr = imgLinks[indexPath.row]
                 
-                cell.setImageWithLink(imgStr)
+                cell.setImageWithLink(imgStr, hidden: hidden)
             }
         }
         
@@ -162,5 +155,62 @@ extension ViewController : UICollectionViewDataSource, UICollectionViewDelegate,
         
         return cellSize
     }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        if let index = secretIndex {
+            
+            if indexPath.row == index {
+                
+                memoryGame.handleCorrectAnswerAtIndex(index)
+            }
+        }
+    }
 }
 
+extension ViewController {
+    
+    private func fetchImages () {
+        
+        fetchImageStarted()
+        
+        MTNetworkHelper.fetchImageLinksWithCompletion { (imageLinks) in
+            
+            let success             = imageLinks != nil
+            self.fetchedImageLinks  = imageLinks
+            
+            dispatch_async(dispatch_get_main_queue(), {
+                
+                self.fetchImageCompleted(success)
+            })
+        }
+    }
+    
+    private func fetchImageStarted () {
+        
+        imagesCollection.hidden = true
+        activityIndicator.startAnimating()
+    }
+    
+    private func fetchImageCompleted (success: Bool) {
+        
+        imagesCollection.reloadData()
+        
+        if !success {
+            
+            activityIndicator.stopAnimating()
+            notifyMessage(networkErrorMessage, withTitle: errorTitle)
+        }
+    }
+    
+    private func notifyMessage(message: String?, withTitle title: String) {
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+        
+        let action = UIAlertAction(title: "OK", style: .Cancel, handler: nil)
+        
+        alertController.addAction(action)
+        
+        presentViewController(alertController, animated: true, completion: nil)
+    }
+}
