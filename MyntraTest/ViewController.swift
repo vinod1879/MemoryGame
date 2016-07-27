@@ -9,14 +9,31 @@
 import UIKit
 
 private let ImageCellId             = "MTImageCell"
-private let cellWidth : CGFloat     = CGRectGetWidth(UIScreen.mainScreen().bounds) / 3
+private let cellWidth : CGFloat     = CGRectGetWidth(UIScreen.mainScreen().bounds) / 3 - 3
 private let cellSize                = CGSizeMake(cellWidth, cellWidth)
-private let numberOfCells           = 9
-private let timerDuration           = 15.0
 
-private let downloadStartMessage    = "Fetching image list..."
-private let downloadSuccessMessage  = "Memorise the images"
-private let errorTitle              = "Error!"
+struct Prompts {
+    
+    static let Initializing = "Fetching images..."
+    static let StartGame    = "Memorise the images..."
+    static let NetworkIssue = "Hit Refresh to try again"
+    static let RightAnswer  = "Correct!"
+    static let WrongAnswer  = "Wrong..."
+    static let GameOver     = "Well done!"
+}
+
+struct Titles {
+    
+    static let Error        = "Error!"
+    static let GameOver     = "Game Over"
+}
+
+struct Config {
+    
+    static let NumberOfTiles = 9
+    static let TimerDuration = 15.0
+}
+
 
 class ViewController: UIViewController {
     
@@ -26,12 +43,14 @@ class ViewController: UIViewController {
     @IBOutlet private var questionImageWidth    : NSLayoutConstraint!
     @IBOutlet private var imagesCollection      : UICollectionView!
     @IBOutlet private var activityIndicator     : UIActivityIndicatorView!
+    @IBOutlet private var refreshButtonItem     : UIBarButtonItem!
     
     
     //MARK:- Private Vars
     
     private var memoryGame          : MTMemoryGame!
     private var secretIndex         : Int?
+    private var animation           : CATransition?
     
     //MARK:- View Load
 
@@ -52,6 +71,9 @@ class ViewController: UIViewController {
     
     @IBAction func refreshButtonTapped (sender: AnyObject) {
         
+        memoryGame?.endGame()
+        navigationItem.title = nil
+        
         setupGame()
     }
     
@@ -61,7 +83,7 @@ class ViewController: UIViewController {
         
         questionImageView.image = nil
         
-        memoryGame = MTMemoryGame(numberOfTiles: numberOfCells)
+        memoryGame = MTMemoryGame(numberOfTiles: Config.NumberOfTiles)
         memoryGame.delegate = self
         
         memoryGame.initialize()
@@ -73,26 +95,35 @@ extension ViewController : MTMemoryGameDelegate {
     func memoryGameStartedInit(memoryGame: MTMemoryGame) {
         
         print("init start")
-        imagesCollection.hidden = true
+        imagesCollection.hidden     = true
+        refreshButtonItem.enabled   = false
         activityIndicator.startAnimating()
+        
+        navigationItem.prompt = Prompts.Initializing
     }
     
     func memoryGameInitializationComplete(memorygame: MTMemoryGame) {
         
         print("init complete")
-        imagesCollection.hidden = false
+        imagesCollection.hidden     = false
+        refreshButtonItem.enabled   = true
         activityIndicator.stopAnimating()
         
-        memoryGame.startTimerWithTimeInterval(timerDuration)
+        memoryGame.startTimerWithTimeInterval(Config.TimerDuration)
         imagesCollection.reloadData()
+        
+        navigationItem.prompt = Prompts.StartGame
     }
     
     func memoryGameInitializationFailed(memoryGame: MTMemoryGame, error: String) {
         
         print("init failed")
         
+        refreshButtonItem.enabled   = true
         activityIndicator.stopAnimating()
-        notifyMessage(error, withTitle: "Error!")
+        notifyMessage(error, withTitle: Titles.Error)
+        
+        navigationItem.prompt = Prompts.NetworkIssue
     }
     
     func memoryGame(memoryGame: MTMemoryGame, updatedTimeString timeString: String) {
@@ -109,7 +140,8 @@ extension ViewController : MTMemoryGameDelegate {
     func memoryGameCompletedSuccessfully(memoryGame: MTMemoryGame) {
         
         print("~~~ Success ~~~")
-        navigationItem.title = "Success!"
+        navigationItem.title = Titles.GameOver
+        navigationItem.prompt = Prompts.GameOver
     }
     
     func memoryGame(memoryGame: MTMemoryGame, selectedImage image: UIImage, withIndex index: Int) {
@@ -129,7 +161,7 @@ extension ViewController : UICollectionViewDataSource, UICollectionViewDelegate,
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
-        return numberOfCells
+        return Config.NumberOfTiles
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -139,7 +171,7 @@ extension ViewController : UICollectionViewDataSource, UICollectionViewDelegate,
         let image = memoryGame.imageAtIndex(indexPath.row)
         
         cell.setImage(image)
-        
+        cell.contentView.layer.addAnimation(self.animationInstance(), forKey: nil)
 
         
         return cell
@@ -158,6 +190,12 @@ extension ViewController : UICollectionViewDataSource, UICollectionViewDelegate,
                 
                 memoryGame.handleCorrectAnswerAtIndex(index)
                 collectionView.reloadItemsAtIndexPaths([indexPath])
+                
+                navigationItem.prompt = Prompts.RightAnswer
+                
+            } else if memoryGame.imageAtIndex(indexPath.row) == nil {
+                
+                navigationItem.prompt = Prompts.WrongAnswer
             }
         }
     }
@@ -174,5 +212,26 @@ extension ViewController {
         alertController.addAction(action)
         
         presentViewController(alertController, animated: true, completion: nil)
+    }
+    
+    private func animationInstance () -> CATransition {
+        
+        if let anim = self.animation {
+            
+            return anim
+        }
+        
+        let animation = CATransition()
+        animation.delegate = self
+        animation.duration = 0.5
+        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        animation.fillMode = kCAFillModeForwards
+        animation.removedOnCompletion = true
+        animation.type = kCATransitionReveal
+        animation.subtype = kCATransitionFromRight
+        
+        self.animation = animation
+        
+        return animation
     }
 }

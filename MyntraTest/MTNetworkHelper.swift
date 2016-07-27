@@ -28,9 +28,7 @@ class MTNetworkHelper: NSObject {
                 
             if let value = response.result.value {
                 
-                let cleanJSON = MTNetworkHelper.cleanupJsonString(value)
-                
-                print("\(value.characters.count) -> \(cleanJSON.characters.count)")
+                let cleanJSON = MTNetworkHelper.sanitizedString(value)
                 
                 let data    = cleanJSON.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
                 
@@ -60,19 +58,18 @@ class MTNetworkHelper: NSObject {
             else {
                 
                 print("Status Code: \(response.response?.statusCode)")
-                print("image fetch failed...\(response.result.error)")
                 completion(imageLinks: nil, error: NetworkError)
             }
         }
     }
     
-    static func cleanupJsonString(jString: String) -> String {
+    static func sanitizedString(jString: String) -> String {
         
         if let regex = try? NSRegularExpression(pattern: "<\\/?[^>]+>", options: .CaseInsensitive) {
             
             let modString = regex.stringByReplacingMatchesInString(jString, options: .WithTransparentBounds, range: NSMakeRange(0, jString.characters.count), withTemplate: "")
             
-            return modString
+            return modString.stringByReplacingOccurrencesOfString("\\'", withString: "'")
         }
         
         return jString
