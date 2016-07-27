@@ -5,6 +5,6 @@ target 'MyntraTest' do
 
 	pod 'Alamofire', '~> 3.4'
 	pod 'SDWebImage', '~>3.8'
-	pod 'SwiftyJSON'
+    pod 'Freddy'
 
 end

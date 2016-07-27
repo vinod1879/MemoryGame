@@ -8,7 +8,7 @@
 
 import UIKit
 import Alamofire
-import SwiftyJSON
+import Freddy
 
 private let FlickrAPIURL    = "https://api.flickr.com/services/feeds/photos_public.gne"
 private let FlickrAPIParams = ["format": "json", "lang": "en-us", "nojsoncallback": "1"]
@@ -19,26 +19,38 @@ class MTNetworkHelper: NSObject {
         
         Alamofire.request(.GET, FlickrAPIURL, parameters: FlickrAPIParams)
         .validate()
-        .responseJSON { response in
+        .responseString { response in
                 
             if let value = response.result.value {
                 
-                let json = JSON(value)
+                let cleanJSON = MTNetworkHelper.cleanupJsonString(value)
                 
-                guard let items = json["items"].array else { completion(imageLinks: nil); return }
+                print("\(value.characters.count) -> \(cleanJSON.characters.count)")
                 
-                var links = [String]()
+                let data    = cleanJSON.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
                 
-                for item in items {
+                do {
                     
-                    let linkStr = item["media"]["m"].string ?? ""
+                    let json    = try JSON(data: data ?? NSData())
+                    let items   = try json.array("items")
                     
-                    links.append(linkStr)
+                    var links   = [String]()
+                    
+                    for item in items {
+                        
+                        let linkStr = try item.string("media", "m")
+                        links.append(linkStr)
+                    }
+                    
+                    print("\(items.count) image links found!")
+                    completion(imageLinks: links)
+                    
+                } catch let error {
+                    
+                    print("Error! \(error)")
+                    
+                    completion(imageLinks: nil)
                 }
-                
-                print("\(items.count) image links found!")
-                
-                completion(imageLinks: links)
             }
             else {
                 
@@ -47,5 +59,17 @@ class MTNetworkHelper: NSObject {
                 completion(imageLinks: nil)
             }
         }
+    }
+    
+    static func cleanupJsonString(jString: String) -> String {
+        
+        if let regex = try? NSRegularExpression(pattern: "<\\/?[^>]+>", options: .CaseInsensitive) {
+            
+            let modString = regex.stringByReplacingMatchesInString(jString, options: .WithTransparentBounds, range: NSMakeRange(0, jString.characters.count), withTemplate: "")
+            
+            return modString
+        }
+        
+        return jString
     }
 }
