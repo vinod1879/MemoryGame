@@ -22,8 +22,11 @@ class ViewController: UIViewController {
     
     //MARK:- Outlets
     
-    @IBOutlet private var imagesCollection  : UICollectionView!
-    @IBOutlet private var activityIndicator : UIActivityIndicatorView!
+    @IBOutlet private var questionImageView     : UIImageView!
+    @IBOutlet private var questionImageWidth    : NSLayoutConstraint!
+    @IBOutlet private var imagesCollection      : UICollectionView!
+    @IBOutlet private var activityIndicator     : UIActivityIndicatorView!
+    
     
     //MARK:- Private Vars
     
@@ -35,6 +38,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setup()
         fetchImages()
     }
 
@@ -52,6 +56,11 @@ class ViewController: UIViewController {
     }
     
     //MARK:- Private API
+    
+    private func setup () {
+        
+        questionImageWidth.constant = cellSize.width
+    }
 
     private func fetchImages () {
         

@@ -61,8 +61,15 @@
                                 </connections>
                             </collectionView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="91I-cc-ywm">
-                                <rect key="frame" x="177" y="324" width="20" height="20"/>
+                                <rect key="frame" x="177" y="323.5" width="20" height="20"/>
                             </activityIndicatorView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TO9-E3-zFG">
+                                <rect key="frame" x="125" y="99" width="125" height="125"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="125" id="Zla-63-Nuf"/>
+                                    <constraint firstAttribute="width" secondItem="TO9-E3-zFG" secondAttribute="height" multiplier="1:1" id="eWu-2U-pMF"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="0.29157110091743121" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -70,6 +77,8 @@
                             <constraint firstAttribute="trailing" secondItem="Rpm-rs-d10" secondAttribute="trailing" id="9zZ-Is-gy7"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Rpm-rs-d10" secondAttribute="bottom" id="CUu-hg-vBj"/>
                             <constraint firstItem="Rpm-rs-d10" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Efr-gx-Jeo"/>
+                            <constraint firstItem="TO9-E3-zFG" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="gdp-42-5NX"/>
+                            <constraint firstItem="TO9-E3-zFG" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="35" id="uqI-pU-o3E"/>
                             <constraint firstItem="91I-cc-ywm" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="v7S-i9-pPh"/>
                         </constraints>
                     </view>
@@ -84,6 +93,8 @@
                     <connections>
                         <outlet property="activityIndicator" destination="91I-cc-ywm" id="0Qa-fi-aYB"/>
                         <outlet property="imagesCollection" destination="Rpm-rs-d10" id="p72-GL-uap"/>
+                        <outlet property="questionImageView" destination="TO9-E3-zFG" id="Iiw-g0-xvB"/>
+                        <outlet property="questionImageWidth" destination="Zla-63-Nuf" id="RdH-NN-6Ir"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
