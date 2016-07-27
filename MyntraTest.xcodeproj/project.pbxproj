@@ -17,6 +17,8 @@
 		0B0334A51D47FD4A0011B05B /* MTNetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0334A41D47FD4A0011B05B /* MTNetworkHelper.swift */; };
 		0B0334A71D4806B00011B05B /* MTImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0334A61D4806B00011B05B /* MTImageCell.swift */; };
 		0B0334A91D48356B0011B05B /* MTMemoryGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0334A81D48356B0011B05B /* MTMemoryGame.swift */; };
+		0B0334AD1D48C29A0011B05B /* MTTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0334AC1D48C29A0011B05B /* MTTimer.swift */; };
+		0B0334AF1D48D2610011B05B /* MTUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B0334AE1D48D2610011B05B /* MTUtility.swift */; };
 		40BAEBC49A0F144840B7C5C9 /* Pods_MyntraTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4D6D77AE07962CFA43BF90E /* Pods_MyntraTest.framework */; };
 /* End PBXBuildFile section */
 
@@ -54,6 +56,8 @@
 		0B0334A41D47FD4A0011B05B /* MTNetworkHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTNetworkHelper.swift; sourceTree = "<group>"; };
 		0B0334A61D4806B00011B05B /* MTImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTImageCell.swift; sourceTree = "<group>"; };
 		0B0334A81D48356B0011B05B /* MTMemoryGame.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTMemoryGame.swift; sourceTree = "<group>"; };
+		0B0334AC1D48C29A0011B05B /* MTTimer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTTimer.swift; sourceTree = "<group>"; };
+		0B0334AE1D48D2610011B05B /* MTUtility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MTUtility.swift; sourceTree = "<group>"; };
 		76156CE83A7A6D9595CA6C3A /* Pods-MyntraTest.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyntraTest.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MyntraTest/Pods-MyntraTest.debug.xcconfig"; sourceTree = "<group>"; };
 		D4D6D77AE07962CFA43BF90E /* Pods_MyntraTest.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MyntraTest.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB33B15BF246B1ABDF1FBE06 /* Pods-MyntraTest.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MyntraTest.release.xcconfig"; path = "Pods/Target Support Files/Pods-MyntraTest/Pods-MyntraTest.release.xcconfig"; sourceTree = "<group>"; };
@@ -153,6 +157,8 @@
 				0B0334A61D4806B00011B05B /* MTImageCell.swift */,
 				0B0334761D47FA390011B05B /* ViewController.swift */,
 				0B0334A81D48356B0011B05B /* MTMemoryGame.swift */,
+				0B0334AC1D48C29A0011B05B /* MTTimer.swift */,
+				0B0334AE1D48D2610011B05B /* MTUtility.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -358,8 +364,10 @@
 			files = (
 				0B0334A71D4806B00011B05B /* MTImageCell.swift in Sources */,
 				0B0334A91D48356B0011B05B /* MTMemoryGame.swift in Sources */,
+				0B0334AF1D48D2610011B05B /* MTUtility.swift in Sources */,
 				0B0334A51D47FD4A0011B05B /* MTNetworkHelper.swift in Sources */,
 				0B0334771D47FA390011B05B /* ViewController.swift in Sources */,
+				0B0334AD1D48C29A0011B05B /* MTTimer.swift in Sources */,
 				0B0334751D47FA390011B05B /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
