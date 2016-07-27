@@ -141,7 +141,7 @@ extension ViewController : MTMemoryGameDelegate {
         
         print("~~~ Success ~~~")
         navigationItem.title = Titles.GameOver
-        navigationItem.prompt = Prompts.GameOver
+        navigationItem.prompt = memoryGame.score()
     }
     
     func memoryGame(memoryGame: MTMemoryGame, selectedImage image: UIImage, withIndex index: Int) {
@@ -149,6 +149,8 @@ extension ViewController : MTMemoryGameDelegate {
         print("Image Presented")
         questionImageView.image = image
         secretIndex             = index
+        
+        navigationItem.title = memoryGame.score()
     }
 }
 
@@ -188,14 +190,16 @@ extension ViewController : UICollectionViewDataSource, UICollectionViewDelegate,
             
             if indexPath.row == index {
                 
-                memoryGame.handleCorrectAnswerAtIndex(index)
-                collectionView.reloadItemsAtIndexPaths([indexPath])
-                
                 navigationItem.prompt = Prompts.RightAnswer
+                
+                memoryGame.handleCorrectAnswerAtIndex(index)
+                collectionView.reloadItemsAtIndexPaths([indexPath])                
                 
             } else if memoryGame.imageAtIndex(indexPath.row) == nil {
                 
+                memoryGame.handleIncorrectAnswerAtIndex(indexPath.row)
                 navigationItem.prompt = Prompts.WrongAnswer
+                navigationItem.title = memoryGame.score()
             }
         }
     }

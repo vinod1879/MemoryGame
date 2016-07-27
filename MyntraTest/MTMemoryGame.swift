@@ -33,6 +33,7 @@ class MTMemoryGame: NSObject {
     private let timer           : MTTimer
     private var timerRunning    = false
     private var imageDownloader : MTImageDownloader!
+    private var numberOfGuesses = 0
     
     //MARK:- Init and Public API
     
@@ -62,10 +63,11 @@ class MTMemoryGame: NSObject {
     
     func handleCorrectAnswerAtIndex (index : Int) {
         
-        if let rIndex = indices.indexOf(index) {
-            
-            indices.removeAtIndex(rIndex)
-        }
+        guard let rIndex = indices.indexOf(index) else { return }
+        
+        numberOfGuesses += 1
+        
+        indices.removeAtIndex(rIndex)
         
         if indices.count == 0 {
             
@@ -75,6 +77,11 @@ class MTMemoryGame: NSObject {
             
             selectRandomImage()
         }
+    }
+    
+    func handleIncorrectAnswerAtIndex (index: Int) {
+        
+        numberOfGuesses += 1
     }
     
     func imageAtIndex(index: Int) -> UIImage? {
@@ -90,6 +97,15 @@ class MTMemoryGame: NSObject {
     func endGame () {
         
         timer.stop()
+    }
+    
+    func score () -> String {
+        
+        let correctGuesses = numberOfTiles - indices.count
+        
+        let score = "Score: \(correctGuesses)/\(numberOfGuesses)"
+        
+        return score
     }
     
     //MARK:- Private
