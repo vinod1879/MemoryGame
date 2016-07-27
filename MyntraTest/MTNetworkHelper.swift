@@ -20,6 +20,22 @@ private let NetworkError    = "Network error! Please check your connection."
 
 class MTNetworkHelper: NSObject {
     
+    static func fetchAPIResponseWithCompletion (completion: (String?) -> Void) {
+        
+        Alamofire.request(.GET, FlickrAPIURL, parameters: FlickrAPIParams)
+            .responseString { response in
+                
+                if let value = response.result.value {
+                    
+                    completion(value)
+                    
+                } else {
+                    
+                    completion(nil)
+                }
+        }
+    }
+    
     static func fetchImageLinksWithCompletion (completion: (imageLinks: [String]?, error: String) -> Void) {
         
         Alamofire.request(.GET, FlickrAPIURL, parameters: FlickrAPIParams)
@@ -30,27 +46,11 @@ class MTNetworkHelper: NSObject {
                 
                 let cleanJSON = MTNetworkHelper.sanitizedString(value)
                 
-                let data    = cleanJSON.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
-                
-                do {
+                if let links = MTNetworkHelper.parseLinksFromJSONString(cleanJSON) {
                     
-                    let json    = try JSON(data: data ?? NSData())
-                    let items   = try json.array("items")
-                    
-                    var links   = [String]()
-                    
-                    for item in items {
-                        
-                        let linkStr = try item.string("media", "m")
-                        links.append(linkStr)
-                    }
-                    
-                    print("\(items.count) image links found!")
                     completion(imageLinks: links, error: "")
-                    
-                } catch let error {
-                    
-                    print("Error! \(error)")
+                }
+                else {
                     
                     completion(imageLinks: nil, error: FlickrError)
                 }
@@ -73,5 +73,33 @@ class MTNetworkHelper: NSObject {
         }
         
         return jString
+    }
+    
+    static func parseLinksFromJSONString(jsonString: String) -> [String]? {
+        
+        let data    = jsonString.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+        
+        do {
+            
+            let json    = try JSON(data: data ?? NSData())
+            let items   = try json.array("items")
+            
+            var links   = [String]()
+            
+            for item in items {
+                
+                let linkStr = try item.string("media", "m")
+                links.append(linkStr)
+            }
+            
+            print("\(items.count) image links found!")
+            return links
+            
+        } catch let error {
+            
+            print("Error! \(error)")
+            
+            return nil
+        }
     }
 }

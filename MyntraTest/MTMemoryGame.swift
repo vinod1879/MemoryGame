@@ -21,8 +21,9 @@ protocol MTMemoryGameDelegate : class {
 
 class MTMemoryGame: NSObject {
     
-    //MARK:- Delegate
+    //MARK:- Public Vars
     
+    var initComplete  = false
     weak var delegate : MTMemoryGameDelegate?
     
     //MARK:- Private Vars
@@ -120,7 +121,6 @@ class MTMemoryGame: NSObject {
             let image   = dictionary[element]
             
             delegate?.memoryGame(self, selectedImage: image!, withIndex: element)
-            
         }
     }
 }
@@ -173,6 +173,7 @@ extension MTMemoryGame : MTImageDownloaderDelegate {
         
         dispatch_async(dispatch_get_main_queue()) { 
         
+            self.initComplete = true
             self.delegate?.memoryGameInitializationComplete(self)
         }
     }
