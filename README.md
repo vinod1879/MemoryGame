@@ -26,3 +26,7 @@ Three Pods have been used:
 1. `Alamofire` - a Swift networking library
 2. `SDWebImage` - an image downloading caching library
 3. `Freddy` - an elegant JSON parser in Swift
+
+# Footnotes
+- The Flickr Public Feeds API seems to provide error prone JSON data - many online JSON parsers and `NSJSONSerialization` detects invalid escape characters in the response about 80-90% of the time. The project solves this issue by including additional code to sanitize the received JSON and then proceeding to parse it.
+- Some basic functional and performance measurement unit tests have been included
