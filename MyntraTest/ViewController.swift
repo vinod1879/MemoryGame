@@ -14,11 +14,11 @@ private let cellSize                = CGSizeMake(cellWidth, cellWidth)
 
 struct Prompts {
     
-    static let Initializing = "Fetching images..."
-    static let StartGame    = "Memorise the images..."
+    static let Initializing = "Fetching images"
+    static let StartGame    = "Memorise the images"
     static let NetworkIssue = "Hit Refresh to try again"
     static let RightAnswer  = "Correct!"
-    static let WrongAnswer  = "Wrong..."
+    static let WrongAnswer  = "Wrong :("
     static let GameOver     = "Well done!"
 }
 
@@ -110,6 +110,7 @@ extension ViewController : MTMemoryGameDelegate {
         activityIndicator.stopAnimating()
         
         memoryGame.startTimerWithTimeInterval(Config.TimerDuration)
+        imagesCollection.userInteractionEnabled = false
         imagesCollection.reloadData()
         
         navigationItem.prompt = Prompts.StartGame
@@ -134,12 +135,15 @@ extension ViewController : MTMemoryGameDelegate {
     
     func memoryGameTimerExpired(memoryGame: MTMemoryGame) {
         
+        imagesCollection.userInteractionEnabled = true
         imagesCollection.reloadData()
     }
     
     func memoryGameCompletedSuccessfully(memoryGame: MTMemoryGame) {
         
         print("~~~ Success ~~~")
+        
+        imagesCollection.userInteractionEnabled = false
         navigationItem.title = Titles.GameOver
         navigationItem.prompt = memoryGame.score()
     }
